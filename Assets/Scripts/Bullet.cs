@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
     public float speed = 10f;
     public float maxLifeTime = 3f;
     public Vector3 targetVector;
+    //public GameObject fragmentosPrefab;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,6 +24,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             IncreaseScore();
+            //Instantiate(fragmentosPrefab, transform.position, transform.rotation);
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
