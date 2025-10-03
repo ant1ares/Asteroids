@@ -157,3 +157,5 @@ MonoBehaviour:
   numberOfFragments: 2
   fragmentSpeed: 5
   maxLifeTime: 2
+  spreadAngle: 90
+  canFragment: 1
