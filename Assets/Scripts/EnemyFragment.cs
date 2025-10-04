@@ -27,7 +27,8 @@ public class EnemyFragment : MonoBehaviour
                 Vector3 bulletDir = bullet.targetVector.normalized;
                 SpawnFragments(bulletDir);
             }
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            Deactivate();
         }
     }
 
@@ -61,22 +62,27 @@ public class EnemyFragment : MonoBehaviour
 
     private void CreateFragment(Vector3 direction)
     {
+        GameObject fragment = ObjectPooling.Instance.GetObject(this.fragmentPrefab);
+        
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
-        GameObject fragmentos = Instantiate(fragmentPrefab, transform.position, rotation);
-        Rigidbody rb = fragmentos.GetComponent<Rigidbody>();
+        fragment.transform.position = transform.position;
+        fragment.transform.rotation = rotation;
+        Rigidbody rb = fragment.GetComponent<Rigidbody>();
+
         if (rb == null)
-        {
-            rb = fragmentos.AddComponent<Rigidbody>();
-        }
+            rb = fragment.AddComponent<Rigidbody>();
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         rb.AddForce(-direction * fragmentSpeed, ForceMode.Impulse);
         // evitar fragmentacion infinita
-        EnemyFragment ef = fragmentos.GetComponent<EnemyFragment>();
+        EnemyFragment ef = fragment.GetComponent<EnemyFragment>();
         if (ef != null)
-        {
             ef.canFragment = false;
-        }
-        Destroy(fragmentos, maxLifeTime);
+        fragment.SetActive(true);
     }
-    
+    void Deactivate()
+    {
+        gameObject.SetActive(false);
+    }
 
 }

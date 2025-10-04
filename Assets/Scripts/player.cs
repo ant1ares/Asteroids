@@ -40,7 +40,10 @@ public class player : MonoBehaviour
         transform.Rotate(Vector3.forward, -rotation * rotationSpeed);
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameObject bullet = Instantiate(bulletPrefab, gun.transform.position, Quaternion.identity);
+            //GameObject bullet = Instantiate(bulletPrefab, gun.transform.position, Quaternion.identity);
+            GameObject bullet = ObjectPooling.Instance.GetObject(bulletPrefab);
+            bullet.transform.position = gun.transform.position;
+            bullet.transform.rotation = Quaternion.identity;
             Bullet bulletScript = bullet.GetComponent<Bullet>();
             bulletScript.targetVector = transform.right;
         }

@@ -7,10 +7,15 @@ public class Bullet : MonoBehaviour
     public float maxLifeTime = 3f;
     public Vector3 targetVector;
     //public GameObject fragmentosPrefab;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnEnable()
     {
-        Destroy(gameObject, maxLifeTime);
+        Invoke(nameof(Deactivate), maxLifeTime);
+    }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Deactivate()
+    {
+        CancelInvoke();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -25,8 +30,10 @@ public class Bullet : MonoBehaviour
         {
             IncreaseScore();
             //Instantiate(fragmentosPrefab, transform.position, transform.rotation);
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            //Destroy(collision.gameObject);
+            //gameObject.SetActive(false);
+            collision.gameObject.SetActive(false);
+            Deactivate();
         }
     }
 
