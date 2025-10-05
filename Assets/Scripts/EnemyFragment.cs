@@ -34,20 +34,6 @@ public class EnemyFragment : MonoBehaviour
 
     private void SpawnFragments(Vector3 bulletDir)
     {
-        /*
-        for (int i = 0; i < numberOfFragments; i++)
-        {
-            GameObject fragmentos = Instantiate(fragmentPrefab, transform.position, transform.rotation);
-            Rigidbody rb = fragmentos.GetComponent<Rigidbody>();
-            if (rb == null)
-            {
-                rb = fragmentos.AddComponent<Rigidbody>();
-            }
-            Vector2 randomDirection = Random.insideUnitCircle.normalized;
-            rb.AddForce(randomDirection * fragmentSpeed, ForceMode.Impulse);
-            Destroy(fragmentos, maxLifeTime);
-        }
-        */
         // rotaciones simetricas
         bulletDir.Normalize();
         Quaternion rot1 = Quaternion.AngleAxis(spreadAngle, Vector3.back);
